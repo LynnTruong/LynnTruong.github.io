@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lynn Truong — Vietnamese Copywriter & Content Strategist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0E0E0E;
+      --surface: #161616;
+      --card: #1C1C1C;
+      --accent: #C8A96E;
+      --accent2: #7B4F2E;
+      --text: #F0EDE6;
+      --muted: #888880;
+      --border: #2A2A2A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(14,14,14,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 50%; height: 100%;
+      background: radial-gradient(ellipse at top right, rgba(200,169,110,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1.05;
+      font-weight: 700;
+      margin-bottom: 16px;
+      max-width: 800px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 48px;
+      line-height: 1.8;
+    }
+
+    .hero-tags {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      margin-bottom: 48px;
+    }
+
+    .tag {
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .tag.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(200,169,110,0.08);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: #0E0E0E;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      border-radius: 4px;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.85; }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      margin-left: 16px;
+    }
+
+    /* SECTION */
+    section { padding: 96px 48px; }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2;
+      margin-bottom: 48px;
+      max-width: 600px;
+    }
+
+    /* ABOUT */
+    .about { background: var(--surface); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-size: 1rem;
+      line-height: 1.9;
+    }
+
+    .about-text p strong { color: var(--text); }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .stat {
+      padding: 28px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* WORK */
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .work-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .work-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .work-card.featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .work-card-visual {
+      background: var(--surface);
+      padding: 40px;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 220px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .work-card.featured .work-card-visual {
+      min-height: 320px;
+    }
+
+    .work-visual-colien {
+      background: linear-gradient(135deg, #1A3A1A 0%, #2D5A2D 100%);
+    }
+
+    .work-visual-zenart {
+      background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+    }
+
+    .work-visual-meta {
+      background: linear-gradient(135deg, #0A1628 0%, #1877F2 200%);
+    }
+
+    .work-visual-ads {
+      background: linear-gradient(135deg, #1A1208 0%, #3D2B0A 100%);
+    }
+
+    .visual-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.9);
+      text-align: center;
+      line-height: 1.5;
+      z-index: 1;
+    }
+
+    .visual-text span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .work-card-content { padding: 32px; }
+
+    .work-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .work-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .work-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .copy-sample {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 24px;
+    }
+
+    .copy-sample-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .copy-sample p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .copy-sample .translation {
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .work-skills {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+
+    .skill-tag {
+      padding: 4px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .work-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 20px;
+      transition: gap 0.2s;
+    }
+    .work-link:hover { gap: 10px; }
+
+    /* SKILLS */
+    .skills { background: var(--surface); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .skill-card {
+      padding: 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .skill-icon {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+
+    .skill-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    .skill-card p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    /* LANGUAGES */
+    .lang-bar {
+      margin-bottom: 20px;
+    }
+
+    .lang-header {
+      display: flex; justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+    }
+
+    .lang-level { color: var(--accent); }
+
+    .lang-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .lang-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      border-radius: 2px;
+    }
+
+    /* CONTACT */
+    .contact {
+      text-align: center;
+      padding: 96px 48px;
+    }
+
+    .contact-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 20px;
+      line-height: 1.15;
+    }
+
+    .contact p {
+      color: var(--muted);
+      margin-bottom: 40px;
+      font-size: 1rem;
+    }
+
+    .contact-links {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    footer p { color: var(--muted); font-size: 0.8rem; }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 48px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero, section { padding: 80px 24px; }
+      .about-grid, .work-card.featured, .skills-grid { grid-template-columns: 1fr; }
+      .work-grid { grid-template-columns: 1fr; }
+      .work-card.featured { grid-column: span 1; }
+      footer { flex-direction: column; gap: 12px; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Lynn Truong</div>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Vietnamese Copywriter & Content Strategist</p>
+    <h1>Words that move<br><em>Vietnamese</em> people.</h1>
+    <p class="hero-sub">
+      I write copy that feels local, sounds human, and sells — in Vietnamese and English. 
+      20+ years working across markets, brands, and cultures. Based in Singapore.
+    </p>
+    <div class="hero-tags">
+      <span class="tag active">Vietnamese Copy</span>
+      <span class="tag active">Transcreation</span>
+      <span class="tag">Brand Voice</span>
+      <span class="tag">Campaign Copy</span>
+      <span class="tag">Content Strategy</span>
+      <span class="tag">AI-Enhanced Writing</span>
+    </div>
+    <div>
+      <a href="#work" class="btn">See My Work</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="section-label">About</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-title">I write from the inside of the culture.</div>
+        <p>
+          I'm Lynn — a Vietnamese copywriter and content strategist based in Singapore. 
+          I've spent <strong>20+ years</strong> working across Vietnamese and Southeast Asian markets, 
+          in industries from finance to F&B to digital marketing.
+        </p>
+        <p>
+          I don't just translate. I <strong>transcreate</strong> — finding the Vietnamese way to say 
+          something that lands with the same emotional weight as the original. 
+          I understand the tones, the generational nuances, the Gen Z slang, 
+          and the cultural references that make copy feel native.
+        </p>
+        <p>
+          Most recently I've been building content frameworks at TDCX, 
+          working directly within <strong>Meta's brand ecosystem</strong> and training 
+          AI models to recognize content quality — so I understand both the 
+          human and machine side of what makes copy work.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-number">20+</div>
+          <div class="stat-label">Years in Vietnamese markets</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Markets covered (VN, Oceania, SEA)</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Languages — fluent in both</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Ideas when the brief is right</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="section-label">Selected Work</div>
+    <div class="section-title">Copy that connects.</div>
+    <div class="work-grid">
+
+      <!-- COLIEN - FEATURED -->
+      <div class="work-card featured">
+        <div class="work-card-visual work-visual-colien">
+          <div class="visual-text">
+            <span>Brand Tagline</span>
+            "Cô Liên!<br>An Tâm Con Hi!"
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-tag">Web Copy · Brand Voice · Vietnamese</div>
+          <div class="work-title">Cô Liên Beef Shop</div>
+          <div class="work-desc">
+            Full website copy for a 30-year-old family beef business in Đà Nẵng expanding 
+            online. The brief: make a street-market brand feel trustworthy, warm, and premium 
+            — without losing its soul. Bilingual (VI/EN).
+          </div>
+          <div class="copy-sample">
+            <div class="copy-sample-label">Homepage Hero</div>
+            <p>"Cô Liên! An Tâm Con Hi!"</p>
+            <p class="translation">"Cô Liên — you can trust me, child." A tagline that carries 30 years of family reputation in six words.</p>
+          </div>
+          <div class="copy-sample">
+            <div class="copy-sample-label">Product Copy — Khô Bò</div>
+            <p>"Nhâm nhi với bia, rượu vang đỏ. Trộn bánh tráng, gỏi đủ đủ — GenZ mê lắm!"</p>
+            <p class="translation">"Snack it with beer or red wine. Toss it in rice paper salad — Gen Z can't get enough!"</p>
+          </div>
+          <div class="copy-sample">
+            <div class="copy-sample-label">Brand Story</div>
+            <p>"Nụ cười của Má — Không chỉ bán thịt, Má bán cả sự tin tưởng, cả kinh nghiệm 30 năm, cả cái tình người Đà Nẵng chân chất."</p>
+            <p class="translation">"Má's smile — She doesn't just sell meat. She sells trust, 30 years of experience, and the honest warmth of Đà Nẵng."</p>
+          </div>
+          <div class="work-skills">
+            <span class="skill-tag">Brand Voice</span>
+            <span class="skill-tag">Storytelling</span>
+            <span class="skill-tag">Vietnamese Copy</span>
+            <span class="skill-tag">Bilingual</span>
+            <span class="skill-tag">E-commerce</span>
+          </div>
+          <a href="https://colienbeefshop.netlify.app" target="_blank" class="work-link">View Live Site →</a>
+        </div>
+      </div>
+
+      <!-- ZENART -->
+      <div class="work-card">
+        <div class="work-card-visual work-visual-zenart">
+          <div class="visual-text">
+            <span>Web Copy</span>
+            "Bringing joy<br>through art."
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-tag">Web Copy · Community Brand · English</div>
+          <div class="work-title">ZenArt Studio Singapore</div>
+          <div class="work-desc">
+            Full website copy for an art studio in Singapore with a heart-led mission. 
+            Warm, inclusive, community-focused tone designed to attract families, 
+            adults, and ADHD learners alike.
+          </div>
+          <div class="copy-sample">
+            <div class="copy-sample-label">Brand Promise</div>
+            <p>"Our art classes bring the enjoyment of art to learners — enhancing creativity, unlocking inner strength, and flowing the soul's thoughts."</p>
+          </div>
+          <div class="work-skills">
+            <span class="skill-tag">Web Copy</span>
+            <span class="skill-tag">Brand Voice</span>
+            <span class="skill-tag">Community</span>
+            <span class="skill-tag">English</span>
+          </div>
+          <a href="https://zenart.sg" target="_blank" class="work-link">View Live Site →</a>
+        </div>
+      </div>
+
+      <!-- SOCIAL COPY - COLIEN -->
+      <div class="work-card">
+        <div class="work-card-visual" style="background: linear-gradient(135deg, #1A3A1A 0%, #2D5A2D 100%); flex-direction: column; gap: 20px;">
+          <div style="display:flex; gap: 32px; justify-content: center;">
+            <div style="text-align:center;"><div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--accent);">76K+</div><div style="font-size:0.7rem; color:rgba(255,255,255,0.5); letter-spacing:0.1em; text-transform:uppercase;">Reach</div></div>
+            <div style="text-align:center;"><div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--accent);">134</div><div style="font-size:0.7rem; color:rgba(255,255,255,0.5); letter-spacing:0.1em; text-transform:uppercase;">Engagements</div></div>
+            <div style="text-align:center;"><div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--accent);">32x</div><div style="font-size:0.7rem; color:rgba(255,255,255,0.5); letter-spacing:0.1em; text-transform:uppercase;">Growth</div></div>
+          </div>
+          <div style="font-size:0.75rem; color:rgba(255,255,255,0.4); letter-spacing:0.1em; text-transform:uppercase;">Jan 2023 to Feb 2024</div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-tag">Social Copy · Facebook Reels · Vietnamese</div>
+          <div class="work-title">Cô Liên — Social Media Growth</div>
+          <div class="work-desc">Wrote and managed Facebook Reel copy for Cô Liên Beef Shop — growing organic reach from 2,379 to 76,946 in just over a year. Copy strategy focused on nostalgia, local pride, and food culture triggers that resonate with Vietnamese audiences.</div>
+          <div class="copy-sample"><div class="copy-sample-label">Best Performing Reel Caption (76K reach)</div><p>"Về Đà Nẵng nhớ mua Chả Bò, Chả bò viên, bò tươi nướng cay, các món thịt ngâm mắm"</p><p class="translation">Nostalgia-first copy triggering homecoming emotion — reach grew 32x in 12 months.</p></div>
+          <div class="work-skills"><span class="skill-tag">Facebook Reels</span><span class="skill-tag">Vietnamese Copy</span><span class="skill-tag">Organic Growth</span><span class="skill-tag">Food and Lifestyle</span></div>
+        </div>
+      </div>
+
+      <!-- META -->
+      <div class="work-card">
+        <div class="work-card-visual work-visual-meta">
+          <div class="visual-text">
+            <span>Content Strategy</span>
+            "Advertiser wins.<br>Meta wins."
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-tag">Content Strategy · Campaign Copy · Vietnamese Market</div>
+          <div class="work-title">Meta Advertiser Content (TDCX)</div>
+          <div class="work-desc">
+            4 years developing content optimization strategies and copy frameworks 
+            for Vietnamese advertisers on Meta platforms — F&B, e-commerce, and finance. 
+            Built content modeling systems now used to train AI quality evaluation.
+          </div>
+          <div class="copy-sample">
+            <div class="copy-sample-label">Insight</div>
+            <p>"Vietnamese Gen Z wants content that is short, fast, but gives them something — a win, an insight, a feeling. Realism beats polish every time."</p>
+          </div>
+          <div class="work-skills">
+            <span class="skill-tag">Content Strategy</span>
+            <span class="skill-tag">Vietnamese Market</span>
+            <span class="skill-tag">Meta Platform</span>
+            <span class="skill-tag">Gen Z</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- STRATEGY SECTION -->
+  <section style="background: var(--surface); padding: 96px 48px;">
+    <div class="section-label">Content Strategy &amp; Campaign Consulting</div>
+    <div class="section-title">Knowing why content works on Meta.</div>
+    <p style="color: var(--muted); max-width: 680px; margin-bottom: 48px; font-size: 1rem; line-height: 1.9;">
+      Beyond writing copy, I have advised Vietnamese businesses across multiple industries on Meta content strategy and campaign planning — applying Meta best practices directly to real advertiser challenges.
+    </p>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px;">
+      <div style="padding: 28px; background: var(--card); border: 1px solid var(--border); border-radius: 12px;">
+        <div style="font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;">Beauty</div>
+        <div style="font-family: Playfair Display, serif; font-size: 1.2rem; margin-bottom: 10px;">Trung Middle TL Beauty Center</div>
+        <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.7; margin-bottom: 16px;">Top 10 beauty center in Hanoi and HCM. Advised on Meta campaign strategy for premium tattoo and eyebrow sculpting services — targeting high-intent beauty audiences with trust-first messaging.</p>
+        <span class="skill-tag">Facebook Ads</span> <span class="skill-tag">Beauty</span> <span class="skill-tag">Campaign Planning</span>
+      </div>
+      <div style="padding: 28px; background: var(--card); border: 1px solid var(--border); border-radius: 12px;">
+        <div style="font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;">Baby E-commerce</div>
+        <div style="font-family: Playfair Display, serif; font-size: 1.2rem; margin-bottom: 10px;">Mangobebe.vn</div>
+        <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.7; margin-bottom: 16px;">Premium Vietnamese baby brand. Advised on full-funnel content strategy and Meta campaign planning to drive e-commerce sales across toy, fashion, and book categories.</p>
+        <span class="skill-tag">E-commerce</span> <span class="skill-tag">Full Funnel</span> <span class="skill-tag">Content Strategy</span>
+      </div>
+      <div style="padding: 28px; background: var(--card); border: 1px solid var(--border); border-radius: 12px;">
+        <div style="font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;">Education</div>
+        <div style="font-family: Playfair Display, serif; font-size: 1.2rem; margin-bottom: 10px;">FPT Polytechnic School</div>
+        <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.7; margin-bottom: 16px;">One of Vietnam largest polytechnic institutions. Advised on Meta content and campaign strategy to drive student enrolment targeting Gen Z and parents.</p>
+        <span class="skill-tag">Education</span> <span class="skill-tag">Gen Z</span> <span class="skill-tag">Lead Generation</span>
+      </div>
+      <div style="padding: 28px; background: var(--card); border: 1px solid var(--border); border-radius: 12px;">
+        <div style="font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;">The Bigger Picture</div>
+        <div style="font-family: Playfair Display, serif; font-size: 1.2rem; margin-bottom: 10px;">Meta Best Practices Applied</div>
+        <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.7; margin-bottom: 16px;">Across all clients I applied Meta content quality standards, the Andromeda machine learning framework, and full-funnel best practices — the same frameworks I later used to train AI to evaluate content quality at scale.</p>
+        <span class="skill-tag">Meta Andromeda</span> <span class="skill-tag">AI Content Eval</span> <span class="skill-tag">Best Practices</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SKILLS -->
+  <section class="skills" id="skills">
+    <div class="section-label">What I Bring</div>
+    <div class="section-title">The full picture.</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">✍️</div>
+        <h3>Vietnamese Copywriting</h3>
+        <p>Native-level copy that captures tone, emotion, and cultural nuance. From taglines to long-form — I write Vietnamese the way it's actually spoken and felt.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔄</div>
+        <h3>Transcreation</h3>
+        <p>I don't translate — I recreate. Taking an English master copy and finding the Vietnamese version that lands with the same strategic and emotional impact.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🎯</div>
+        <h3>Brand Voice</h3>
+        <p>I've built brand voices for heritage food brands, art studios, and financial platforms. I understand how tone shifts across formats while staying consistent.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <h3>Content Strategy</h3>
+        <p>Copy without strategy is decoration. I connect content to business outcomes — using data, market insight, and audience behavior to inform every word.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🤖</div>
+        <h3>AI-Enhanced Writing</h3>
+        <p>I've trained AI models to evaluate content quality. I understand how machines read copy — and I use that knowledge to write copy that works for both humans and algorithms.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🌏</div>
+        <h3>Market Intelligence</h3>
+        <p>20+ years across Vietnamese, Singaporean, and SEA markets. I know what Gen Z wants, what triggers trust in Vietnamese consumers, and what makes content travel.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 64px; max-width: 400px;">
+      <div class="section-label" style="margin-bottom: 24px;">Languages</div>
+      <div class="lang-bar">
+        <div class="lang-header">
+          <span>Vietnamese</span>
+          <span class="lang-level">Native</span>
+        </div>
+        <div class="lang-track"><div class="lang-fill" style="width:100%"></div></div>
+      </div>
+      <div class="lang-bar">
+        <div class="lang-header">
+          <span>English</span>
+          <span class="lang-level">Fluent</span>
+        </div>
+        <div class="lang-track"><div class="lang-fill" style="width:92%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="section-label">Get In Touch</div>
+      <h2>Let's make<br><em style="font-family:'Playfair Display',serif; color:var(--accent)">something real.</em></h2>
+      <p>
+        I'm available for freelance copywriting, transcreation, and content strategy projects 
+        — especially for brands targeting Vietnamese audiences in Singapore and Vietnam.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:Lynn.t.l.h@gmail.com" class="btn">Email Me</a>
+        <a href="https://www.linkedin.com/in/lynntruong" target="_blank" class="btn btn-outline">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Lynn Truong. Vietnamese Copywriter & Content Strategist. Singapore.</p>
+    <p style="color: var(--muted); font-size: 0.75rem;">Available for freelance projects.</p>
+  </footer>
+
+</body>
+</html>
