@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lynn Truong Narratives: Stories from a Copywriter's Life</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0E0E0E;
+      --surface: #161616;
+      --card: #1C1C1C;
+      --accent: #C8A96E;
+      --accent2: #7B4F2E;
+      --text: #F0EDE6;
+      --muted: #888880;
+      --border: #2A2A2A;
+      --light-bg: #F7F4EF;
+      --light-text: #1A1A1A;
+      --light-muted: #6B6560;
+      --light-border: #DDD8D0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(14,14,14,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    .lang-toggle {
+      display: flex; align-items: center;
+      background: rgba(200,169,110,0.1);
+      border: 1px solid var(--accent);
+      border-radius: 100px;
+      padding: 4px; gap: 2px;
+    }
+
+    .lang-btn {
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .lang-btn.active { background: var(--accent); color: #0E0E0E; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--accent); border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 65px; left: 0; right: 0;
+      background: rgba(14,14,14,0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 24px;
+      flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover, .mobile-menu a.active { color: var(--accent); }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 140px 48px 64px;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 50%; height: 100%;
+      background: radial-gradient(ellipse at top right, rgba(200,169,110,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.15;
+      color: var(--text);
+      max-width: 800px;
+      margin-bottom: 16px;
+      position: relative; z-index: 1;
+    }
+
+    .page-hero .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .page-hero p.intro {
+      color: var(--muted);
+      max-width: 600px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    /* PROFILE */
+    .profile-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 40px;
+      position: relative; z-index: 1;
+    }
+
+    .photo-placeholder {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent2) 0%, var(--accent) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #0E0E0E;
+      border: 3px solid var(--accent);
+      flex-shrink: 0;
+    }
+
+    .profile-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .profile-role { color: var(--muted); font-size: 0.85rem; }
+
+    /* STORY BLOCKS */
+    .story-block {
+      padding: 64px 48px;
+      border-bottom: 1px solid var(--border);
+      max-width: 1200px;
+    }
+    .story-block:last-of-type { border-bottom: none; }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* VISUAL CARD */
+    .visual-card {
+      background: linear-gradient(135deg, #1A1A1A 0%, #232323 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .visual-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -50%;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle, rgba(200,169,110,0.07) 0%, transparent 70%);
+    }
+
+    .visual-card-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      z-index: 1;
+    }
+
+    .visual-card-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      line-height: 1.6;
+      color: var(--text);
+      z-index: 1;
+    }
+
+    .visual-card-quote.vi-text { font-style: normal; }
+
+    .story-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 24px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .story-text p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .divider { height: 1px; background: var(--border); margin: 0 48px; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg);
+    }
+    footer p { color: var(--muted); font-size: 0.8rem; }
+
+    .back-to-top {
+      position: fixed; bottom: 32px; right: 32px;
+      width: 44px; height: 44px;
+      background: var(--accent); color: #0E0E0E;
+      border: none; border-radius: 50%;
+      font-size: 1.2rem; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
+      z-index: 99; transition: opacity 0.2s; text-decoration: none;
+    }
+    .back-to-top:hover { opacity: 0.85; }
+    .back-to-top.visible { display: flex; }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 100px 24px 48px; }
+      .story-block { padding: 48px 24px; }
+      .story-grid { grid-template-columns: 1fr; }
+      .profile-row { flex-direction: column; align-items: flex-start; text-align: left; }
+      footer { flex-direction: column; gap: 12px; padding: 24px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Lynn Truong</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="index.html#about" data-en="About" data-vi="Về Tôi">About</a></li>
+        <li><a href="index.html#work" data-en="Work" data-vi="Dự Án">Work</a></li>
+        <li><a href="best-practices.html" data-en="Best Practices" data-vi="Best Practices">Best Practices</a></li>
+        <li><a href="narratives.html" class="active" data-en="Narratives" data-vi="Narratives">Narratives</a></li>
+        <li><a href="index.html#contact" data-en="Contact" data-vi="Liên Hệ">Contact</a></li>
+      </ul>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btnVI" onclick="setLang('vi')">VI</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#about" data-en="About" data-vi="Về Tôi">About</a>
+    <a href="index.html#work" data-en="Work" data-vi="Dự Án">Work</a>
+    <a href="best-practices.html" data-en="Best Practices" data-vi="Best Practices">Best Practices</a>
+    <a href="narratives.html" class="active" data-en="Narratives" data-vi="Narratives">Narratives</a>
+    <a href="index.html#contact" data-en="Contact" data-vi="Liên Hệ">Contact</a>
+  </div>
+
+  <!-- BACK TO TOP -->
+  <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="section-label" data-en="From Lynn's Desk" data-vi="Từ Bàn Làm Việc Của Lynn">From Lynn's Desk</div>
+    <h1 data-en="Lynn Truong Narratives" data-vi="Lynn Truong Narratives">Lynn Truong Narratives</h1>
+    <div class="subtitle" data-en="random little stories from a copywriter's life" data-vi="mẫu chuyện vụn vặt của Lynn">random little stories from a copywriter's life</div>
+    <p class="intro" data-en="Some stories about words, work, and the moments that taught me how to write better. Nothing polished. Just real." data-vi="Vài câu chuyện nhỏ về chữ nghĩa, công việc, và những khoảnh khắc dạy mình viết tốt hơn. Không hoa mỹ. Chỉ là những điều thật.">
+      Some stories about words, work, and the moments that taught me how to write better. Nothing polished. Just real.
+    </p>
+
+    <div class="profile-row">
+      <div class="photo-placeholder">LT</div>
+      <div>
+        <div class="profile-name">Lynn Truong</div>
+        <div class="profile-role" data-en="Vietnamese Copywriter & Content Strategist" data-vi="Chuyên Viết Content & Chiến Lược Nội Dung Tiếng Việt">Vietnamese Copywriter & Content Strategist</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STORY 1 -->
+  <div class="story-block">
+    <div class="story-grid">
+      <div class="visual-card">
+        <div class="visual-card-label" data-en="Narrative 01" data-vi="Câu Chuyện 01">Narrative 01</div>
+        <div class="visual-card-quote" data-en='"You&apos;re writing like someone looking in from outside, not someone looking out from inside."' data-vi='"Con viết như người ngoài nhìn vào, không viết như người ở trong nhìn ra."'>"You're writing like someone looking in from outside, not someone looking out from inside."</div>
+      </div>
+      <div class="story-text">
+        <h2 data-en="The first campaign I ever wrote in Vietnamese" data-vi="Chiến dịch tiếng Việt đầu tiên mình viết">The first campaign I ever wrote in Vietnamese</h2>
+        <p data-en="I was working in Sài Gòn at the time, sitting in a small office on the second floor, right next to the Chairman's room. My title was Assistant to the Chairman, while also overseeing the sales and marketing department. I was given a deadline for a brand communications campaign tied to an upcoming client conference: a press release, a strategy plan, and a tagline for the event." data-vi="Lúc đó mình đang ở Sài Gòn, ngồi trong một văn phòng nhỏ ở lầu hai, ngay bên cạnh phòng Chủ Tịch. Với chức danh trợ lý Chủ Tịch, kiêm giám sát phòng sales và marketing, mình nhận một deadline cho chiến dịch truyền thông thương hiệu qua hội nghị khách hàng: một thông cáo báo chí, một kế hoạch chiến lược, và một tagline cho sự kiện.">
+          I was working in Sài Gòn at the time, sitting in a small office on the second floor, right next to the Chairman's room. My title was Assistant to the Chairman, while also overseeing the sales and marketing department. I was given a deadline for a brand communications campaign tied to an upcoming client conference: a press release, a strategy plan, and a tagline for the event.
+        </p>
+        <p data-en="I brought all my enthusiasm, and a vocabulary full of &quot;modern, international&quot; words I'd picked up as a student in Singapore. So I wrote what I thought modern meant: long sentences, formal words, the kind of language I'd seen in English magazine ads translated word for word." data-vi="Mình mang theo cả nhiệt huyết và vốn từ &quot;hiện đại, quốc tế&quot; mà mình học được khi còn là sinh viên ở Singapore. Vậy là mình viết theo cách mình nghĩ là hiện đại: câu dài, từ ngữ trang trọng, kiểu văn mà mình từng thấy trong mấy mẫu quảng cáo tiếng Anh dịch nguyên câu sang.">
+          I brought all my enthusiasm, and a vocabulary full of "modern, international" words I'd picked up as a student in Singapore. So I wrote what I thought modern meant: long sentences, formal words, the kind of language I'd seen in English magazine ads translated word for word.
+        </p>
+        <p data-en="In under three days, I finished it and brought it in to the Chairman. Bác (that's how I addressed him, since he allowed it, and we were close) was a calm man, gentle in appearance, but very firm in how he worked. I didn't think he'd be familiar with professional marketing language, so part of me felt confident a Singapore graduate like myself wouldn't get criticized." data-vi="Chưa đầy ba ngày, mình hoàn thành và mang vào trình Chủ Tịch. Bác (cách mình xưng hô với Chủ Tịch, vì Bác cho phép, và rất gần gũi) là người trầm tĩnh, vẻ ngoài hiền lành, nhưng phong cách làm việc rất kiên định. Mình không nghĩ Bác sẽ rành các ngôn từ marketing chuyên nghiệp mà một sinh viên tốt nghiệp Singapore như mình mang vào, nên trong lòng có chút tự tin là sẽ không bị chê.">
+          In under three days, I finished it and brought it in to the Chairman. Bác (that's how I addressed him, since he allowed it, and we were close) was a calm man, gentle in appearance, but very firm in how he worked. I didn't think he'd be familiar with professional marketing language, so part of me felt confident a Singapore graduate like myself wouldn't get criticized.
+        </p>
+        <p data-en="He read it slowly, in silence, while I sat there sweating more than the Sài Gòn heat could explain. Then he looked up and said one sentence I've never forgotten: &quot;You're writing like someone looking in from outside, not someone looking out from inside.&quot;" data-vi="Bác đọc rất chậm, im lặng, còn mình ngồi đó mồ hôi ra nhiều hơn cả cái nóng Sài Gòn có thể giải thích được. Rồi Bác nhìn lên và nói một câu mình nhớ đến giờ: &quot;Con viết như người ngoài nhìn vào, không viết như người ở trong nhìn ra.&quot;">
+          He read it slowly, in silence, while I sat there sweating more than the Sài Gòn heat could explain. Then he looked up and said one sentence I've never forgotten: "You're writing like someone looking in from outside, not someone looking out from inside."
+        </p>
+        <p data-en="I didn't fully understand it then. I do now. That sentence has quietly guided every piece of Vietnamese copy I've written since." data-vi="Lúc đó mình chưa hiểu hết. Giờ thì hiểu rồi. Câu đó âm thầm dẫn đường cho mọi dòng content tiếng Việt mình viết từ đó đến nay.">
+          I didn't fully understand it then. I do now. That sentence has quietly guided every piece of Vietnamese copy I've written since.
+        </p>
+        <p style="font-size: 0.85rem; color: var(--accent); font-style: italic; margin-top: 24px;" data-en="Memories of time working for Công Thành Group (congthanhgroup.com)." data-vi="Kỷ niệm thời gian làm việc tại Công Thành Group (congthanhgroup.com).">
+          Memories of time working for Công Thành Group (congthanhgroup.com).
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY 2 -->
+  <div class="story-block">
+    <div class="story-grid">
+      <div class="visual-card">
+        <div class="visual-card-label" data-en="Narrative 02" data-vi="Câu Chuyện 02">Narrative 02</div>
+        <div class="visual-card-quote vi-text">"Cô Liên đây! An Tâm Con Hỉ!"</div>
+        <div class="visual-card-quote" style="font-size:0.85rem; margin-top:12px; color:var(--muted); font-style:italic;" data-en="Six words. Three days." data-vi="Sáu chữ. Ba ngày.">Six words. Three days.</div>
+      </div>
+      <div class="story-text">
+        <h2 data-en="What 20 years in marketing taught me about silence" data-vi="20 năm làm marketing dạy mình về sự im lặng">What 20 years in marketing taught me about silence</h2>
+        <p data-en="Early in my career, I thought good copy meant filling every inch of space. More words meant more value, more persuasion, more reasons to buy. I wrote long. I wrote &quot;thorough.&quot; Clients nodded politely and rarely remembered a word of it." data-vi="Hồi mới vào nghề, mình nghĩ content hay là phải lấp đầy từng khoảng trống. Càng nhiều chữ càng nhiều giá trị, càng nhiều lý do để mua. Mình viết dài. Mình viết &quot;đầy đủ.&quot; Khách hàng gật đầu lịch sự và hiếm khi nhớ được câu nào.">
+          Early in my career, I thought good copy meant filling every inch of space. More words meant more value, more persuasion, more reasons to buy. I wrote long. I wrote "thorough." Clients nodded politely and rarely remembered a word of it.
+        </p>
+        <p data-en="Years later, working on the Cô Liên Beef Shop project, I spent three days on a single line: &quot;Cô Liên đây! An Tâm Con Hỉ!&quot; Six words. My early career self would have written a paragraph about thirty years of family tradition, quality ingredients, and trust. Instead, six words carried all of it, because they sounded like something an actual person would say to you in a market in Đà Nẵng." data-vi="Nhiều năm sau, làm dự án Cô Liên Beef Shop, mình dành ba ngày chỉ cho một câu: &quot;Cô Liên đây! An Tâm Con Hỉ!&quot; Sáu chữ. Nếu là mình hồi trước, có lẽ đã viết cả đoạn về 30 năm truyền thống gia đình, nguyên liệu chất lượng, sự tin tưởng. Nhưng sáu chữ đó đã chứa hết tất cả, vì nó nghe như một câu người ta thật sự nói với mình ở chợ Đà Nẵng.">
+          Years later, working on the Cô Liên Beef Shop project, I spent three days on a single line: "Cô Liên đây! An Tâm Con Hỉ!" Six words. My early career self would have written a paragraph about thirty years of family tradition, quality ingredients, and trust. Instead, six words carried all of it, because they sounded like something an actual person would say to you in a market in Đà Nẵng.
+        </p>
+        <p data-en="It took longer to write six words than it would have taken to write sixty. That&apos;s the part nobody tells you about good copywriting. The shortest lines are usually the ones that took the longest to find." data-vi="Viết sáu chữ mất nhiều thời gian hơn viết sáu mươi chữ. Đó là điều không ai nói với bạn về nghề viết content. Những câu ngắn nhất thường là những câu mất nhiều thời gian nhất để tìm ra.">
+          It took longer to write six words than it would have taken to write sixty. That's the part nobody tells you about good copywriting. The shortest lines are usually the ones that took the longest to find.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY 3 -->
+  <div class="story-block">
+    <div class="story-grid">
+      <div class="visual-card">
+        <div class="visual-card-label" data-en="Narrative 03" data-vi="Câu Chuyện 03">Narrative 03</div>
+        <div class="visual-card-quote vi-text">"Này, cái này ngon lắm, thử đi."</div>
+        <div class="visual-card-quote" style="font-size:0.85rem; margin-top:12px; color:var(--muted); font-style:italic;" data-en="Hey, this one's really good, try it." data-vi="">Hey, this one's really good, try it.</div>
+      </div>
+      <div class="story-text">
+        <h2 data-en="Why I still write like I&apos;m talking to my neighbor" data-vi="Vì sao mình vẫn viết như đang nói chuyện với hàng xóm">Why I still write like I'm talking to my neighbor</h2>
+        <p data-en="I grew up in a neighborhood where everyone knew everyone&apos;s business. Aunties leaning over balconies, kids running between houses, someone always calling out from a window to ask if you&apos;d eaten yet. It wasn&apos;t polished. It was warm, direct, and a little nosy in the best way." data-vi="Mình lớn lên trong một con hẻm mà ai cũng biết chuyện của ai. Các cô, các chị đứng trên balcony nói chuyện, đám trẻ con chạy qua chạy lại giữa các nhà, lúc nào cũng có ai đó gọi từ trên cửa sổ hỏi &quot;ăn cơm chưa.&quot; Không hoa mỹ, nhưng ấm áp, thẳng thắn, và hơi &quot;nhiều chuyện&quot; theo cách dễ chịu.">
+          I grew up in a neighborhood where everyone knew everyone's business. Aunties leaning over balconies, kids running between houses, someone always calling out from a window to ask if you'd eaten yet. It wasn't polished. It was warm, direct, and a little nosy in the best way.
+        </p>
+        <p data-en="That&apos;s still how I write Vietnamese copy today. When a brand asks me to write &quot;Dear valued customer, we are pleased to introduce,&quot; I hear my old neighborhood telling me that&apos;s not how anyone actually talks. Instead I write something closer to: &quot;Này, cái này ngon lắm, thử đi.&quot; Hey, this one&apos;s really good, try it." data-vi="Đến giờ mình vẫn viết content tiếng Việt như vậy. Khi khách hàng yêu cầu viết &quot;Kính gửi quý khách hàng, chúng tôi xin trân trọng giới thiệu,&quot; mình nghe thấy cả con hẻm cũ của mình nói rằng chẳng ai nói chuyện kiểu đó cả. Thay vào đó mình viết gần như: &quot;Này, cái này ngon lắm, thử đi.&quot;">
+          That's still how I write Vietnamese copy today. When a brand asks me to write "Dear valued customer, we are pleased to introduce," I hear my old neighborhood telling me that's not how anyone actually talks. Instead I write something closer to: "Này, cái này ngon lắm, thử đi." Hey, this one's really good, try it.
+        </p>
+        <p data-en="Clients sometimes hesitate at first. It feels too casual, too simple. Then the engagement numbers come in, and they understand: people don&apos;t trust brands that sound like brands. They trust people who sound like people. That&apos;s the whole job, really. Staying that person, even while writing for a company." data-vi="Đôi khi khách hàng hơi do dự lúc đầu. Nghe có vẻ quá đơn giản, quá thân mật. Nhưng rồi số liệu tương tác lên, và họ hiểu ra: người ta không tin thương hiệu nghe như thương hiệu. Người ta tin người nghe như người. Đó chính là cả công việc này, thật ra là vậy. Vẫn là một con người, dù đang viết cho một công ty.">
+          Clients sometimes hesitate at first. It feels too casual, too simple. Then the engagement numbers come in, and they understand: people don't trust brands that sound like brands. They trust people who sound like people. That's the whole job, really. Staying that person, even while writing for a company.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p data-en="© 2026 Lynn Truong. Vietnamese Copywriter & Content Strategist. Singapore." data-vi="© 2026 Lynn Truong. Chuyên Viết Content & Chiến Lược Nội Dung Tiếng Việt. Singapore.">© 2026 Lynn Truong. Vietnamese Copywriter & Content Strategist. Singapore.</p>
+    <p style="color: var(--muted); font-size: 0.75rem;"><a href="index.html" style="color:var(--accent); text-decoration:none;" data-en="← Back to Home" data-vi="← Về Trang Chủ">← Back to Home</a></p>
+  </footer>
+
+  <script>
+    let currentLang = 'en';
+    function setLang(lang) {
+      currentLang = lang;
+      document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+      document.getElementById('btnVI').classList.toggle('active', lang === 'vi');
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (text !== null && text !== '') el.innerHTML = text;
+      });
+    }
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
+    });
+  </script>
+
+</body>
+</html>
