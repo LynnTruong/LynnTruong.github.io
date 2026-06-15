@@ -455,6 +455,25 @@
     .strategy-card-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 10px; color: var(--text); }
     .strategy-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; margin-bottom: 16px; }
 
+    .card-more {
+      display: none;
+      margin-top: -8px;
+    }
+    .card-more.show { display: block; }
+
+    .read-more-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 0;
+      transition: opacity 0.2s;
+    }
+    .read-more-btn:hover { opacity: 0.7; }
+
     /* CONTACT */
     .contact { text-align: center; padding: 96px 48px; background: var(--bg); }
     .contact-inner { max-width: 600px; margin: 0 auto; }
@@ -772,26 +791,34 @@
       <div class="strategy-card">
         <div class="strategy-card-label" data-en="Beauty" data-vi="Làm Đẹp">Beauty</div>
         <div class="strategy-card-title">Trung Middle TL Beauty Center</div>
-        <p data-en="Top 10 beauty center in Hanoi and HCM. Advised on Meta campaign strategy for premium tattoo and eyebrow sculpting services. Targeting high-intent beauty audiences with trust-first messaging." data-vi="Top 10 trung tâm làm đẹp tại Hà Nội và TP.HCM. Tư vấn chiến lược quảng cáo Meta cho dịch vụ phun xăm và tạo hình lông mày cao cấp. Nhắm đến tệp khách hàng có nhu cầu cao với thông điệp đặt uy tín lên đầu.">Top 10 beauty center in Hanoi and HCM.</p>
-        <span class="skill-tag">Facebook Ads</span> <span class="skill-tag">Beauty</span> <span class="skill-tag">Campaign Planning</span>
+        <p data-en="Top 10 beauty center in Hanoi and HCM." data-vi="Top 10 trung tâm làm đẹp tại Hà Nội và TP.HCM.">Top 10 beauty center in Hanoi and HCM.</p>
+        <p class="card-more" data-en="Advised on Meta campaign strategy for premium tattoo and eyebrow sculpting services. Targeting high-intent beauty audiences with trust-first messaging." data-vi="Tư vấn chiến lược quảng cáo Meta cho dịch vụ phun xăm và tạo hình lông mày cao cấp. Nhắm đến tệp khách hàng có nhu cầu cao với thông điệp đặt uy tín lên đầu.">Advised on Meta campaign strategy for premium tattoo and eyebrow sculpting services. Targeting high-intent beauty audiences with trust-first messaging.</p>
+        <button class="read-more-btn" onclick="toggleCard(this)" data-en="Read more →" data-vi="Xem thêm →" data-en-less="Show less ↑" data-vi-less="Thu lại ↑">Read more →</button>
+        <div style="margin-top:16px;"><span class="skill-tag">Facebook Ads</span> <span class="skill-tag">Beauty</span> <span class="skill-tag">Campaign Planning</span></div>
       </div>
       <div class="strategy-card">
         <div class="strategy-card-label" data-en="Baby E-commerce" data-vi="Thương Mại Điện Tử Mẹ & Bé">Baby E-commerce</div>
         <div class="strategy-card-title">Mangobebe.vn</div>
-        <p data-en="Premium Vietnamese baby brand. Advised on full-funnel content strategy and Meta campaign planning to drive e-commerce sales across toy, fashion, and book categories." data-vi="Thương hiệu mẹ và bé cao cấp của Việt Nam. Tư vấn chiến lược nội dung full-funnel và lập kế hoạch chiến dịch Meta để thúc đẩy doanh số đồ chơi, thời trang và sách thiếu nhi.">Premium Vietnamese baby brand.</p>
-        <span class="skill-tag">E-commerce</span> <span class="skill-tag">Full Funnel</span> <span class="skill-tag">Content Strategy</span>
+        <p data-en="Premium Vietnamese baby brand." data-vi="Thương hiệu mẹ và bé cao cấp của Việt Nam.">Premium Vietnamese baby brand.</p>
+        <p class="card-more" data-en="Advised on full-funnel content strategy and Meta campaign planning to drive e-commerce sales across toy, fashion, and book categories." data-vi="Tư vấn chiến lược nội dung full-funnel và lập kế hoạch chiến dịch Meta để thúc đẩy doanh số đồ chơi, thời trang và sách thiếu nhi.">Advised on full-funnel content strategy and Meta campaign planning to drive e-commerce sales across toy, fashion, and book categories.</p>
+        <button class="read-more-btn" onclick="toggleCard(this)" data-en="Read more →" data-vi="Xem thêm →" data-en-less="Show less ↑" data-vi-less="Thu lại ↑">Read more →</button>
+        <div style="margin-top:16px;"><span class="skill-tag">E-commerce</span> <span class="skill-tag">Full Funnel</span> <span class="skill-tag">Content Strategy</span></div>
       </div>
       <div class="strategy-card">
         <div class="strategy-card-label" data-en="Education" data-vi="Giáo Dục">Education</div>
         <div class="strategy-card-title">FPT Polytechnic School</div>
-        <p data-en="One of Vietnam's largest polytechnic institutions. Advised on Meta content and campaign strategy to drive student enrolment targeting Gen Z and parents." data-vi="Một trong những trường cao đẳng lớn nhất Việt Nam. Tư vấn chiến lược nội dung và chiến dịch Meta để tăng tuyển sinh, nhắm đến Gen Z và phụ huynh.">One of Vietnam's largest polytechnic institutions.</p>
-        <span class="skill-tag">Education</span> <span class="skill-tag">Gen Z</span> <span class="skill-tag">Lead Generation</span>
+        <p data-en="One of Vietnam's largest polytechnic institutions." data-vi="Một trong những trường cao đẳng lớn nhất Việt Nam.">One of Vietnam's largest polytechnic institutions.</p>
+        <p class="card-more" data-en="Advised on Meta content and campaign strategy to drive student enrolment targeting Gen Z and parents." data-vi="Tư vấn chiến lược nội dung và chiến dịch Meta để tăng tuyển sinh, nhắm đến Gen Z và phụ huynh.">Advised on Meta content and campaign strategy to drive student enrolment targeting Gen Z and parents.</p>
+        <button class="read-more-btn" onclick="toggleCard(this)" data-en="Read more →" data-vi="Xem thêm →" data-en-less="Show less ↑" data-vi-less="Thu lại ↑">Read more →</button>
+        <div style="margin-top:16px;"><span class="skill-tag">Education</span> <span class="skill-tag">Gen Z</span> <span class="skill-tag">Lead Generation</span></div>
       </div>
       <div class="strategy-card">
         <div class="strategy-card-label" data-en="The Bigger Picture" data-vi="Nhìn Toàn Cục">The Bigger Picture</div>
         <div class="strategy-card-title" data-en="Meta Best Practices Applied" data-vi="Ứng Dụng Best Practices Meta">Meta Best Practices Applied</div>
-        <p data-en="Across all clients I applied Meta content quality standards, the Andromeda machine learning framework, and full-funnel best practices. The same frameworks I later used to train AI to evaluate content quality at scale." data-vi="Với tất cả khách hàng, mình đều áp dụng tiêu chuẩn chất lượng nội dung Meta, framework machine learning Andromeda và best practices full-funnel. Chính những framework này sau đó được dùng để huấn luyện AI đánh giá chất lượng content ở quy mô lớn.">Across all clients I applied Meta content quality standards and full-funnel best practices.</p>
-        <span class="skill-tag">Meta Andromeda</span> <span class="skill-tag">AI Content Eval</span> <span class="skill-tag">Best Practices</span>
+        <p data-en="Across all clients I applied Meta content quality standards and full-funnel best practices." data-vi="Với tất cả khách hàng, mình đều áp dụng tiêu chuẩn chất lượng nội dung Meta và best practices full-funnel.">Across all clients I applied Meta content quality standards and full-funnel best practices.</p>
+        <p class="card-more" data-en="This includes the Andromeda machine learning framework. The same frameworks I later used to train AI to evaluate content quality at scale." data-vi="Bao gồm framework machine learning Andromeda. Chính những framework này sau đó được dùng để huấn luyện AI đánh giá chất lượng content ở quy mô lớn.">This includes the Andromeda machine learning framework. The same frameworks I later used to train AI to evaluate content quality at scale.</p>
+        <button class="read-more-btn" onclick="toggleCard(this)" data-en="Read more →" data-vi="Xem thêm →" data-en-less="Show less ↑" data-vi-less="Thu lại ↑">Read more →</button>
+        <div style="margin-top:16px;"><span class="skill-tag">Meta Andromeda</span> <span class="skill-tag">AI Content Eval</span> <span class="skill-tag">Best Practices</span></div>
       </div>
     </div>
   </div>
@@ -915,8 +942,16 @@
       document.getElementById('btnVI').classList.toggle('active', lang === 'vi');
 
       document.querySelectorAll('[data-en]').forEach(el => {
-        const text = el.getAttribute('data-' + lang);
-        if (text) el.innerHTML = text;
+        if (el.classList.contains('read-more-btn')) {
+          const more = el.previousElementSibling;
+          const isShown = more.classList.contains('show');
+          const key = isShown ? 'data-' + lang + '-less' : 'data-' + lang;
+          const text = el.getAttribute(key);
+          if (text) el.innerHTML = text;
+        } else {
+          const text = el.getAttribute('data-' + lang);
+          if (text) el.innerHTML = text;
+        }
       });
     }
 
@@ -932,6 +967,16 @@
     function closeMenu() {
       hamburger.classList.remove('open');
       mobileMenu.classList.remove('open');
+    }
+
+    // Strategy card expand/collapse
+    function toggleCard(btn) {
+      const more = btn.previousElementSibling;
+      more.classList.toggle('show');
+      const isShown = more.classList.contains('show');
+      const lessKey = 'data-' + currentLang + '-less';
+      const moreKey = 'data-' + currentLang;
+      btn.innerHTML = isShown ? btn.getAttribute(lessKey) : btn.getAttribute(moreKey);
     }
 
     // Back to top
