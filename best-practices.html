@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Facebook Content Best Practices: Lynn Truong</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0E0E0E;
+      --surface: #161616;
+      --card: #1C1C1C;
+      --accent: #C8A96E;
+      --accent2: #7B4F2E;
+      --text: #F0EDE6;
+      --muted: #888880;
+      --border: #2A2A2A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(14,14,14,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    .lang-toggle {
+      display: flex; align-items: center;
+      background: rgba(200,169,110,0.1);
+      border: 1px solid var(--accent);
+      border-radius: 100px;
+      padding: 4px; gap: 2px;
+    }
+
+    .lang-btn {
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .lang-btn.active { background: var(--accent); color: #0E0E0E; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--accent); border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 65px; left: 0; right: 0;
+      background: rgba(14,14,14,0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 24px;
+      flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover, .mobile-menu a.active { color: var(--accent); }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 140px 48px 64px;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 50%; height: 100%;
+      background: radial-gradient(ellipse at top right, rgba(200,169,110,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.15;
+      color: var(--text);
+      max-width: 800px;
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+
+    .page-hero p.intro {
+      color: var(--muted);
+      max-width: 700px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      position: relative; z-index: 1;
+    }
+
+    /* STATS STRIP */
+    .stats-strip {
+      display: flex;
+      gap: 48px;
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+
+    .stat-mini { display: flex; flex-direction: column; }
+    .stat-mini-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-mini-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .divider { height: 1px; background: var(--border); margin: 0 48px; }
+
+    /* PRACTICE ITEM */
+    .practice-item {
+      padding: 56px 48px;
+      border-bottom: 1px solid var(--border);
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .practice-item:last-of-type { border-bottom: none; }
+
+    .visual-card {
+      background: linear-gradient(135deg, #1A1A1A 0%, #232323 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .visual-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -50%;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle, rgba(200,169,110,0.07) 0%, transparent 70%);
+    }
+
+    .practice-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      color: var(--accent);
+      line-height: 1;
+      opacity: 0.6;
+      z-index: 1;
+      margin-bottom: 16px;
+    }
+
+    .visual-card-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      z-index: 1;
+    }
+
+    .visual-card-tag {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: var(--text);
+      z-index: 1;
+    }
+
+    .practice-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .practice-text p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.9;
+    }
+
+    /* CTA */
+    .cta-section {
+      padding: 80px 48px;
+      text-align: center;
+      background: var(--surface);
+    }
+
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .cta-section p {
+      color: var(--muted);
+      margin-bottom: 32px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: #0E0E0E;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      border-radius: 4px;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.85; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg);
+    }
+    footer p { color: var(--muted); font-size: 0.8rem; }
+
+    .back-to-top {
+      position: fixed; bottom: 32px; right: 32px;
+      width: 44px; height: 44px;
+      background: var(--accent); color: #0E0E0E;
+      border: none; border-radius: 50%;
+      font-size: 1.2rem; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
+      z-index: 99; transition: opacity 0.2s; text-decoration: none;
+    }
+    .back-to-top:hover { opacity: 0.85; }
+    .back-to-top.visible { display: flex; }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 100px 24px 48px; }
+      .practice-item { padding: 48px 24px; grid-template-columns: 1fr; }
+      .stats-strip { gap: 32px; }
+      .cta-section { padding: 56px 24px; }
+      footer { flex-direction: column; gap: 12px; padding: 24px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Lynn Truong</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="index.html#about" data-en="About" data-vi="Về Tôi">About</a></li>
+        <li><a href="index.html#work" data-en="Work" data-vi="Dự Án">Work</a></li>
+        <li><a href="best-practices.html" class="active" data-en="Best Practices" data-vi="Best Practices">Best Practices</a></li>
+        <li><a href="narratives.html" data-en="Narratives" data-vi="Narratives">Narratives</a></li>
+        <li><a href="index.html#contact" data-en="Contact" data-vi="Liên Hệ">Contact</a></li>
+      </ul>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btnVI" onclick="setLang('vi')">VI</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#about" data-en="About" data-vi="Về Tôi">About</a>
+    <a href="index.html#work" data-en="Work" data-vi="Dự Án">Work</a>
+    <a href="best-practices.html" class="active" data-en="Best Practices" data-vi="Best Practices">Best Practices</a>
+    <a href="narratives.html" data-en="Narratives" data-vi="Narratives">Narratives</a>
+    <a href="index.html#contact" data-en="Contact" data-vi="Liên Hệ">Contact</a>
+  </div>
+
+  <!-- BACK TO TOP -->
+  <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="section-label" data-en="Field Notes" data-vi="Ghi Chú Thực Tế">Field Notes</div>
+    <h1 data-en="What actually works on Facebook in Vietnam." data-vi="Điều gì thực sự hiệu quả trên Facebook tại Việt Nam.">What actually works on Facebook in Vietnam.</h1>
+    <p class="intro" data-en="Most brands write content like they&apos;re filling a form. Audiences in Vietnam don&apos;t respond to forms. They respond to people. Here are five things I&apos;ve learned from running content that grew from 2,379 to 76,946 reach, and from training AI to evaluate what &quot;good content&quot; even means." data-vi="Hầu hết thương hiệu viết content như đang điền vào một cái form. Người Việt không phản hồi với form. Họ phản hồi với con người. Đây là năm điều mình học được từ việc làm content tăng từ 2.379 lên 76.946 lượt tiếp cận, và từ việc huấn luyện AI đánh giá thế nào là &quot;content tốt.&quot;">
+      Most brands write content like they're filling a form. Audiences in Vietnam don't respond to forms. They respond to people. Here are five things I've learned from running content that grew from 2,379 to 76,946 reach, and from training AI to evaluate what "good content" even means.
+    </p>
+
+    <div class="stats-strip">
+      <div class="stat-mini">
+        <div class="stat-mini-number">76K+</div>
+        <div class="stat-mini-label" data-en="Organic Reach Achieved" data-vi="Lượt Tiếp Cận Tự Nhiên">Organic Reach Achieved</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-number">32x</div>
+        <div class="stat-mini-label" data-en="Growth in 12 Months" data-vi="Tăng Trưởng Trong 12 Tháng">Growth in 12 Months</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-number">4</div>
+        <div class="stat-mini-label" data-en="Years Inside Meta's Ecosystem" data-vi="Năm Trong Hệ Sinh Thái Meta">Years Inside Meta's Ecosystem</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRACTICE 1 -->
+  <div class="practice-item">
+    <div class="visual-card">
+      <div class="practice-number">01</div>
+      <div class="visual-card-label" data-en="Principle" data-vi="Nguyên Tắc">Principle</div>
+      <div class="visual-card-tag" data-en="People don&apos;t share new things. They share things that remind them of home." data-vi="Người ta không chia sẻ điều mới. Họ chia sẻ điều khiến họ nhớ về nhà.">People don't share new things. They share things that remind them of home.</div>
+    </div>
+    <div class="practice-text">
+      <h2 data-en="Nostalgia beats novelty" data-vi="Hoài niệm thắng sự mới lạ">Nostalgia beats novelty</h2>
+      <p data-en="People don&apos;t share things because they&apos;re new. They share things because it reminds them of home. &quot;Về Đà Nẵng nhớ mua Chả Bò&quot; worked because it wasn&apos;t selling a product, it was selling a memory." data-vi="Người ta không chia sẻ vì điều đó mới. Người ta chia sẻ vì điều đó khiến họ nhớ về nhà. &quot;Về Đà Nẵng nhớ mua Chả Bò&quot; hiệu quả không phải vì nó bán sản phẩm, mà vì nó bán một ký ức.">
+        People don't share things because they're new. They share things because it reminds them of home. "Về Đà Nẵng nhớ mua Chả Bò" worked because it wasn't selling a product, it was selling a memory.
+      </p>
+    </div>
+  </div>
+
+  <!-- PRACTICE 2 -->
+  <div class="practice-item">
+    <div class="visual-card">
+      <div class="practice-number">02</div>
+      <div class="visual-card-label" data-en="Principle" data-vi="Nguyên Tắc">Principle</div>
+      <div class="visual-card-tag" data-en="Write like a text from a friend, not a brand statement." data-vi="Viết như nhắn tin cho bạn, không phải tuyên bố từ thương hiệu.">Write like a text from a friend, not a brand statement.</div>
+    </div>
+    <div class="practice-text">
+      <h2 data-en="Short and real beats polished" data-vi="Ngắn và thật thắng sự bóng bẩy">Short and real beats polished</h2>
+      <p data-en="Gen Z scrolls past anything that looks like an ad. The captions that performed best were the ones that sounded like a text from a friend, not a brand statement." data-vi="Gen Z lướt qua mọi thứ trông giống quảng cáo. Những caption hiệu quả nhất là những caption nghe như tin nhắn từ một người bạn, không phải tuyên bố từ thương hiệu.">
+        Gen Z scrolls past anything that looks like an ad. The captions that performed best were the ones that sounded like a text from a friend, not a brand statement.
+      </p>
+    </div>
+  </div>
+
+  <!-- PRACTICE 3 -->
+  <div class="practice-item">
+    <div class="visual-card">
+      <div class="practice-number">03</div>
+      <div class="visual-card-label" data-en="Principle" data-vi="Nguyên Tắc">Principle</div>
+      <div class="visual-card-tag" data-en="Write captions that invite a reply, not just a like." data-vi="Viết caption mời người ta trả lời, không chỉ để thích.">Write captions that invite a reply, not just a like.</div>
+    </div>
+    <div class="practice-text">
+      <h2 data-en="The comment section is the second headline" data-vi="Phần bình luận là tiêu đề thứ hai">The comment section is the second headline</h2>
+      <p data-en="On Meta, what happens in the comments often outperforms the caption itself. Write captions that invite a reply, not just a like." data-vi="Trên Meta, những gì xảy ra trong phần bình luận thường hiệu quả hơn cả caption. Hãy viết caption mời người ta trả lời, không chỉ để thích.">
+        On Meta, what happens in the comments often outperforms the caption itself. Write captions that invite a reply, not just a like.
+      </p>
+    </div>
+  </div>
+
+  <!-- PRACTICE 4 -->
+  <div class="practice-item">
+    <div class="visual-card">
+      <div class="practice-number">04</div>
+      <div class="visual-card-label" data-en="Principle" data-vi="Nguyên Tắc">Principle</div>
+      <div class="visual-card-tag" data-en="Pick one feeling. Pride. Hunger. Nostalgia. Humor. Just one." data-vi="Chọn một cảm xúc. Tự hào. Đói bụng. Hoài niệm. Hài hước. Chỉ một thôi.">Pick one feeling. Pride. Hunger. Nostalgia. Humor. Just one.</div>
+    </div>
+    <div class="practice-text">
+      <h2 data-en="One emotion, not five messages" data-vi="Một cảm xúc, không phải năm thông điệp">One emotion, not five messages</h2>
+      <p data-en="The best performing posts had one clear feeling: pride, hunger, nostalgia, humor. Trying to communicate &quot;quality AND price AND tradition AND new flavor&quot; in one post dilutes all of them." data-vi="Những bài đăng hiệu quả nhất chỉ mang một cảm xúc rõ ràng: tự hào, đói bụng, hoài niệm, hài hước. Cố gắng truyền tải &quot;chất lượng VÀ giá cả VÀ truyền thống VÀ vị mới&quot; trong một bài sẽ làm loãng hết tất cả.">
+        The best performing posts had one clear feeling: pride, hunger, nostalgia, humor. Trying to communicate "quality AND price AND tradition AND new flavor" in one post dilutes all of them.
+      </p>
+    </div>
+  </div>
+
+  <!-- PRACTICE 5 -->
+  <div class="practice-item">
+    <div class="visual-card">
+      <div class="practice-number">05</div>
+      <div class="visual-card-label" data-en="Principle" data-vi="Nguyên Tắc">Principle</div>
+      <div class="visual-card-tag" data-en="The algorithm rewards what humans already reward." data-vi="Thuật toán thưởng cho điều mà con người đã thưởng trước.">The algorithm rewards what humans already reward.</div>
+    </div>
+    <div class="practice-text">
+      <h2 data-en="Platform fluency isn&apos;t optional anymore" data-vi="Hiểu nền tảng không còn là lựa chọn">Platform fluency isn't optional anymore</h2>
+      <p data-en="Working inside Meta&apos;s content evaluation frameworks taught me this: the algorithm rewards what humans already reward. Write for the person scrolling at 11pm, not for the brand guidelines doc." data-vi="Làm việc trong các framework đánh giá nội dung của Meta dạy mình điều này: thuật toán thưởng cho điều mà con người đã thưởng trước. Viết cho người đang lướt điện thoại lúc 11 giờ đêm, không phải cho tài liệu hướng dẫn thương hiệu.">
+        Working inside Meta's content evaluation frameworks taught me this: the algorithm rewards what humans already reward. Write for the person scrolling at 11pm, not for the brand guidelines doc.
+      </p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2 data-en="Want content that actually performs?" data-vi="Muốn content thực sự hiệu quả?">Want content that actually performs?</h2>
+    <p data-en="Let&apos;s talk about your brand, your audience, and how to write Vietnamese content that people actually stop scrolling for." data-vi="Hãy nói về thương hiệu của bạn, khách hàng của bạn, và cách viết content tiếng Việt khiến người ta phải ngừng lướt.">
+      Let's talk about your brand, your audience, and how to write Vietnamese content that people actually stop scrolling for.
+    </p>
+    <a href="index.html#contact" class="btn" data-en="Get in Touch" data-vi="Liên Hệ Ngay">Get in Touch</a>
+  </div>
+
+  <footer>
+    <p data-en="© 2026 Lynn Truong. Vietnamese Copywriter & Content Strategist. Singapore." data-vi="© 2026 Lynn Truong. Chuyên Viết Content & Chiến Lược Nội Dung Tiếng Việt. Singapore.">© 2026 Lynn Truong. Vietnamese Copywriter & Content Strategist. Singapore.</p>
+    <p style="color: var(--muted); font-size: 0.75rem;"><a href="index.html" style="color:var(--accent); text-decoration:none;" data-en="← Back to Home" data-vi="← Về Trang Chủ">← Back to Home</a></p>
+  </footer>
+
+  <script>
+    let currentLang = 'en';
+    function setLang(lang) {
+      currentLang = lang;
+      document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+      document.getElementById('btnVI').classList.toggle('active', lang === 'vi');
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (text !== null && text !== '') el.innerHTML = text;
+      });
+    }
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
+    });
+  </script>
+
+</body>
+</html>
