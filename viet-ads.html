@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Viết Ads: Lynn Truong</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0E0E0E;
+      --surface: #161616;
+      --card: #1C1C1C;
+      --accent: #C8A96E;
+      --accent2: #7B4F2E;
+      --text: #F0EDE6;
+      --muted: #888880;
+      --border: #2A2A2A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(14,14,14,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    .lang-toggle {
+      display: flex; align-items: center;
+      background: rgba(200,169,110,0.1);
+      border: 1px solid var(--accent);
+      border-radius: 100px;
+      padding: 4px; gap: 2px;
+    }
+
+    .lang-btn {
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .lang-btn.active { background: var(--accent); color: #0E0E0E; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--accent); border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 65px; left: 0; right: 0;
+      background: rgba(14,14,14,0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 24px;
+      flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover, .mobile-menu a.active { color: var(--accent); }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 140px 48px 64px;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 50%; height: 100%;
+      background: radial-gradient(ellipse at top right, rgba(200,169,110,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.15;
+      color: var(--text);
+      max-width: 800px;
+      margin-bottom: 16px;
+      position: relative; z-index: 1;
+    }
+
+    .page-hero .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+
+    .page-hero p.intro {
+      color: var(--muted);
+      max-width: 650px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      position: relative; z-index: 1;
+    }
+
+    /* JOIN GROUP CTA */
+    .join-cta {
+      margin-top: 40px;
+      padding: 28px 32px;
+      background: linear-gradient(135deg, #1A1A1A 0%, #232323 100%);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      position: relative; z-index: 1;
+      max-width: 700px;
+    }
+
+    .join-cta-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    .join-cta-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: #0E0E0E;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      border-radius: 4px;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .btn:hover { opacity: 0.85; }
+
+    .divider { height: 1px; background: var(--border); margin: 0 48px; }
+
+    /* POST BLOCK */
+    .post-block {
+      padding: 56px 48px;
+      border-bottom: 1px solid var(--border);
+      max-width: 900px;
+    }
+    .post-block:last-of-type { border-bottom: none; }
+
+    .post-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .post-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .post-body {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 2;
+      white-space: pre-line;
+    }
+
+    .post-body .signoff {
+      display: block;
+      margin-top: 20px;
+      font-style: italic;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    .post-video {
+      margin-top: 24px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      aspect-ratio: 16/9;
+      max-width: 500px;
+    }
+
+    .post-video iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .post-image {
+      margin-top: 24px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      max-width: 360px;
+    }
+
+    .post-image img {
+      width: 100%;
+      display: block;
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+      padding: 80px 48px;
+      text-align: center;
+      background: var(--surface);
+    }
+
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .cta-section p {
+      color: var(--muted);
+      margin-bottom: 32px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg);
+    }
+    footer p { color: var(--muted); font-size: 0.8rem; }
+
+    .back-to-top {
+      position: fixed; bottom: 32px; right: 32px;
+      width: 44px; height: 44px;
+      background: var(--accent); color: #0E0E0E;
+      border: none; border-radius: 50%;
+      font-size: 1.2rem; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
+      z-index: 99; transition: opacity 0.2s; text-decoration: none;
+    }
+    .back-to-top:hover { opacity: 0.85; }
+    .back-to-top.visible { display: flex; }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 100px 24px 48px; }
+      .post-block { padding: 40px 24px; }
+      .join-cta { padding: 24px; flex-direction: column; align-items: flex-start; }
+      .join-cta .btn { width: 100%; text-align: center; }
+      .cta-section { padding: 56px 24px; }
+      footer { flex-direction: column; gap: 12px; padding: 24px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Lynn Truong</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="index.html#about" data-en="About" data-vi="Về Tôi">About</a></li>
+        <li><a href="index.html#work" data-en="Work" data-vi="Dự Án">Work</a></li>
+        <li><a href="best-practices.html" data-en="Best Practices" data-vi="Best Practices">Best Practices</a></li>
+        <li><a href="narratives.html" data-en="Narratives" data-vi="Narratives">Narratives</a></li>
+        <li><a href="viet-ads.html" class="active" data-en="Viết Ads" data-vi="Viết Ads">Viết Ads</a></li>
+        <li><a href="index.html#contact" data-en="Contact" data-vi="Liên Hệ">Contact</a></li>
+      </ul>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btnVI" onclick="setLang('vi')">VI</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#about" data-en="About" data-vi="Về Tôi">About</a>
+    <a href="index.html#work" data-en="Work" data-vi="Dự Án">Work</a>
+    <a href="best-practices.html" data-en="Best Practices" data-vi="Best Practices">Best Practices</a>
+    <a href="narratives.html" data-en="Narratives" data-vi="Narratives">Narratives</a>
+    <a href="viet-ads.html" class="active" data-en="Viết Ads" data-vi="Viết Ads">Viết Ads</a>
+    <a href="index.html#contact" data-en="Contact" data-vi="Liên Hệ">Contact</a>
+  </div>
+
+  <!-- BACK TO TOP -->
+  <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="section-label" data-en="Writing Community" data-vi="Cộng Đồng Viết">Writing Community</div>
+    <h1 data-en="Viết Ads" data-vi="Viết Ads">Viết Ads</h1>
+    <div class="subtitle" data-en="a space to write, a space to read" data-vi="không gian viết, không gian đọc">a space to write, a space to read</div>
+    <p class="intro" data-en="Viết Ads is a Facebook group I started for people who love advertising copy, the language of it, the craft of it. Posts here are snapshots from the group: thoughts on copywriting, scriptwriting, and the words that stay with us." data-vi="Viết Ads là một nhóm Facebook mình lập ra cho những ai yêu thích chữ nghĩa quảng cáo, mê phân tích nội dung, say mê nghề viết. Những bài đăng dưới đây là một vài lát cắt từ nhóm: suy nghĩ về copywriting, viết kịch bản, và những câu chữ ở lại với mình.">
+      Viết Ads is a Facebook group I started for people who love advertising copy, the language of it, the craft of it. Posts here are snapshots from the group: thoughts on copywriting, scriptwriting, and the words that stay with us.
+    </p>
+
+    <div class="join-cta">
+      <div>
+        <div class="join-cta-text" data-en="Join the Viết Ads group" data-vi="Tham gia nhóm Viết Ads">Join the Viết Ads group</div>
+        <div class="join-cta-sub" data-en="Read, write, and talk about copywriting with fellow writers." data-vi="Đọc, viết, và trò chuyện về nghề viết cùng những người cùng đam mê.">Read, write, and talk about copywriting with fellow writers.</div>
+      </div>
+      <a href="https://www.facebook.com/share/g/17jusGm224/?mibextid=wwXIfr" target="_blank" class="btn" data-en="Join on Facebook →" data-vi="Vào Nhóm Facebook →">Join on Facebook →</a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- POST 1 -->
+  <div class="post-block">
+    <div class="post-label" data-en="Post 01 · On Simplicity" data-vi="Bài 01 · Về Sự Tối Giản">Post 01 · On Simplicity</div>
+    <div class="post-title" data-en="The Houdini Solution: thinking inside the box" data-vi="Giải Pháp Houdini: nghĩ trong cái box">The Houdini Solution: thinking inside the box</div>
+    <div class="post-body" data-en='Reading along, &quot;keep the ads simplified... choose the simplest way to write, the most creative images, the simplest ad films&quot;...and suddenly came across a new concept: the &quot;Houdini&quot; solution. Put creativity and innovation to work by thinking inside the box. Recommended for exactly this kind of simplified approach.
+
+All this time I thought you had to &quot;think out of the box&quot; to come up with creative, unique solutions. But the Houdini theory points toward focus, simplicity, and speed within a specific limit of space and resources, to produce ideas and creativity that feel more urgent and real. (That is how I understand it.)
+
+This reminds me of something I hear all the time: &quot;Oh, I can not make a video myself, I do not have the resources, I do not have the budget, I do not have a pro camera, I do not know how to make it creative.&quot; So the Houdini Solution might be showing up at exactly the right time. Do not be afraid your video will not look polished. Just know that having a good video matters right now, and all you need is a phone that can record. The video you make should be a creative product carrying your own one of a kind idea. Then you will see something wonderful: a few hours after posting to Facebook or Instagram Reels, 100K views (who knows). The only thing to fear is having no idea at all. So when someone offers you a spark of an idea, grab it and make it your own. Simple, short, thirty seconds is a typical video.
+
+Do you remember the short videos that stayed with you the longest? I still remember Vinamilk&apos;s &quot;100% 100% pure fresh milk 100%, we are happy cows, we are joyful cows,&quot; and &quot;Charlie bit my finger.&quot; I have watched &quot;Charlie bit my finger&quot; over and over and never get tired of it. (It really was a phenomenon, sixteen years ago.) Still feels so compelling, so good, so natural, so moving. So many layers of emotion packed into this short video of barely thirty seconds. (Anyone working in marketing or advertising should go find it.) The way it was shot, the simple &quot;box&quot; of the idea, the message about &quot;love&quot; so clear! They did not need a professional camera at all! So when you have a great idea, simple, and executed brilliantly on video, nobody complains about the production quality anymore.
+
+So the thing to do right now is: think and create an idea that lives inside the &quot;box&quot; to make an outstanding ad!
+
+Inspired by reading a passage from &quot;Hey, Whipple, Squeeze This&quot; (Luke Sullivan, Sam Bennett). Still looking for a copy of &quot;The Houdini Solution,&quot; heard it is good, sharing it here for you all!' data-vi='Đọc tới đoạn này: "hãy chọn cách tối giản mọi bài viết, hình ảnh sáng tạo, các thước phim quảng cáo"... thì quá bất ngờ về concept mới: giải pháp "Houdini": put creativity and innovation to work by thinking inside the box, được khuyên áp dụng cho cách làm tối giản này.
+
+Hồi nào tới giờ cứ nghĩ việc phải "think out of the box" thì mới đưa ra những giải pháp sáng tạo, độc đáo để giải quyết vấn đề. Còn thuyết Houdini lại hướng tới sự tập trung, tối giản, speed trong một giới hạn cụ thể về không gian, nguồn lực, để đưa ra ý tưởng, sáng tạo thực tế cấp bách hơn 😉 (mình hiểu là vậy)
+
+Liên tưởng tới việc thường hay gặp là các anh chị hay phàn nàn về việc "ôi, tôi không thể tự làm video được, tôi không có nguồn lực, tôi không có ngân sách, tôi không có máy quay pro, tôi không biết làm thế nào để sáng tạo nó". Vậy Houdini Solution xuất hiện có thể đúng thời điểm. Anh chị đừng sợ về chất lượng không xịn sò của video anh chị sẽ tạo, mà hãy biết là có video hay là cần thiết lúc này, chỉ cần một chiếc điện thoại có thể quay phim được. Video anh chị làm ra phải là sản phẩm sáng tạo của sự truyền tải cái "ý tưởng" có một không hai của anh chị. Rồi thì anh chị sẽ thấy điều tuyệt vời sau khi video được post lên FB / Instagram Reels một vài tiếng thì có tới 100K views (who knows 😉). Chỉ sợ anh chị không có ý tưởng thôi. Cho nên khi ai đó gợi ý cho mình một vài ý tưởng thì chớp ngay và biến tấu nó là của mình. Đơn giản, ngắn gọn, 30 giây là một video điển hình.
+
+Anh chị có nhớ lâu nhất một vài video ngắn mà anh chị từng coi qua? Còn tui thì nhớ hoài thước phim quảng cáo của Vinamilk "100% 100% sữa tươi nguyên chất 100%, chúng tôi là những con bò vui nhộn, chúng tôi là những con bò hạnh phúc" và "charlie bit my finger". Tui xem đi xem lại video "Charlie bit my finger" mà không ngán (phải nói đó là một hiện tượng, 16 năm trước đây). Giờ vẫn thấy quá hấp dẫn, quá hay, quá tự nhiên, quá xúc động. Bao nhiêu thứ cung bật cảm xúc đều có thể thấy được trong video ngắn gần 30 giây này (các bạn làm trong ngành marketing/advertising nên tìm coi). Cái cách mà người quay quay, cái "box" ý tưởng đơn giản, cái thông điệp về "tình yêu" quá rõ! Họ đâu cần máy quay chuyên nghiệp nhỉ! Vậy thì khi có một ý tưởng tuyệt, hay, đơn giản được thể hiện xuất sắc qua video, thì không ai phàn nàn về chất lượng của nó nữa.
+
+Cho nên điều anh chị cần làm ngay là: có suy nghĩ và sáng tạo ra ý tưởng nằm trong "box" để làm nên một quảng cáo tuyệt vời!
+
+Cảm hứng viết từ việc đọc một đoạn trong cuốn "bút chì sắc, ý tưởng lớn, quảng cáo để đời" (Luke Sullivan, Sam Bennett). Còn cuốn "The Houdini Solution" thì đang tìm đọc. Thấy hay nên giới thiệu anh chị nè!'>
+      Reading along, "keep the ads simplified... choose the simplest way to write, the most creative images, the simplest ad films"...and suddenly came across a new concept: the "Houdini" solution. Put creativity and innovation to work by thinking inside the box.
+
+      All this time I thought you had to "think out of the box" to come up with creative, unique solutions. But the Houdini theory points toward focus, simplicity, and speed within a specific limit of space and resources.
+
+      This reminds me of something I hear all the time: "I can not make a video myself, I do not have the resources, I do not have a pro camera." So the Houdini Solution might be showing up at exactly the right time. All you need is a phone that can record, and a one of a kind idea.
+
+      Do you remember the short videos that stayed with you longest? I still remember Vinamilk's "we are happy cows" jingle, and "Charlie bit my finger." Sixteen years later, still so natural, so moving. They did not need a professional camera at all.
+
+      So the thing to do right now is: think and create an idea that lives inside the "box" to make an outstanding ad!
+      <span class="signoff">Inspired by "Hey, Whipple, Squeeze This" (Luke Sullivan, Sam Bennett).</span>
+    </div>
+  </div>
+
+  <!-- POST 2 -->
+  <div class="post-block">
+    <div class="post-label" data-en="Post 02 · On Visual Storytelling" data-vi="Bài 02 · Về Hình Ảnh Kể Chuyện">Post 02 · On Visual Storytelling</div>
+    <div class="post-title" data-en="The eye remembers what the ear forgets" data-vi="Con mắt sẽ nhớ những thứ mà đôi tai sẽ quên">The eye remembers what the ear forgets</div>
+    <div class="post-body" data-en="Whenever we sell something, we have to find some way to communicate with the customer. Telling the story of a product or a brand through images almost always works.
+
+People say the eye remembers what the ear forgets. So images that flow into images, what we call a short film, stir emotional memory even more.
+
+So if you are writing a short video script, think about a concept strong enough in visuals that a viewer could understand it even with the sound off.
+
+Watch the wordless film below. I found it deeply moving, and I still remember it." data-vi="Bằng hình thức nào đó khi chúng ta bán hàng thì chúng ta phải tìm mọi cách giao tiếp với khách hàng. Cách kể cho họ nghe câu chuyện của sản phẩm, thương hiệu qua các bức hình luôn đạt hiệu quả cao.
+
+Người ta nói &quot;con mắt sẽ nhớ những thứ mà đôi tai sẽ quên&quot;. Nên những bức hình tiếp diễn với bức hình, còn gọi là thước phim ngắn, sẽ thôi thúc cảm xúc nhớ hơn.
+
+Cho nên, người viết kịch bản video ngắn nên suy nghĩ concept làm các thước phim ngắn sao cho nó chứa đựng sức mạnh về hình ảnh đến mức người xem vẫn có thể hiểu được dù tắt tiếng.
+
+Hãy xem một thước phim không lời bên dưới. Mình rất ấn tượng, xúc động và nhớ mãi!">
+      Whenever we sell something, we have to find some way to communicate with the customer. Telling the story of a product or a brand through images almost always works.
+
+      People say the eye remembers what the ear forgets. So images that flow into images, what we call a short film, stir emotional memory even more.
+
+      So if you are writing a short video script, think about a concept strong enough in visuals that a viewer could understand it even with the sound off.
+
+      Watch the wordless film below. I found it deeply moving, and I still remember it.
+    </div>
+    <div class="post-video">
+      <iframe src="https://www.youtube.com/embed/ufCM4GjwKa0" title="Wordless ad film" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- POST 3 -->
+  <div class="post-block">
+    <div class="post-label" data-en="Post 03 · On Rhetorical Questions" data-vi="Bài 03 · Về Câu Hỏi Tu Từ">Post 03 · On Rhetorical Questions</div>
+    <div class="post-title" data-en="Good headlines for March 8th ads" data-vi="Những câu tiêu đề hay cho các mẫu quảng cáo ngày 8/3">Good headlines for March 8th ads</div>
+    <div class="post-body" data-en='Good headlines for March 8th ads. If today is the day you are starting an ad campaign for it, congratulations. You are now part of the idea behind a rather sweet day.
+
+For as long as anyone remembers, women have spent their time caring for family and children, rarely setting time aside for themselves. Maybe close to March 8th, they themselves do not even know what they should do that day.
+
+But if today we start with a few questions, maybe they will realize: tomorrow is March 8th. A day for a few feelings that are "impulsive, longing to be woken from a quiet sleep."
+
+So how do you write a question that becomes a true rhetorical question. I would bet ChatGPT has never once produced a proper rhetorical question:
+Will tomorrow&apos;s outing be fun?
+Where does the real happiness of women on March 8th actually come from?
+What color does she really like?
+(I love a rhetorical question just like this one, from a famous flower ad: "exactly how angry is she?")
+
+Take your time writing it. Do I still love this craft of writing?' data-vi='Những câu tiêu đề hay cho các mẫu quảng cáo của ngày 8/3. Nếu như hôm nay bạn mới bắt đầu lên một chiến dịch quảng cáo thì xin chúc mừng bạn. Bạn đã là một phần trong ý niệm của một ngày tương đối dễ thương.
+
+Từ xưa tới giờ, phụ nữ thường chỉ chăm lo cho gia đình, con cái mà ít ai dành thời gian cho chính mình. Có thể gần tới ngày 8/3 họ cũng không biết là mình cần phải làm gì ngày hôm đó.
+
+Nhưng nếu hôm nay mình bắt đầu một vài câu hỏi, thì có thể họ sẽ biết rằng: mai là 8/3 rồi. Ngày của một vài sự kiện "bốc đồng, mong muốn ngủ yên giờ được đánh thức".
+
+Vậy câu hỏi viết thế nào để trở nên là một câu hỏi tu từ. Mình cá là ChatGPT chưa bao giờ đưa ra một câu hỏi tu từ đúng chất:
+Ngày mai mình đi chơi có vui?
+Nét hạnh phúc của chị em ngày 8/3 thật sự ở đâu?
+Chính xác là cô ấy thích màu gì?
+(mình rất thích câu hỏi tu từ tương tự như thế này trong một mẫu quảng cáo nổi tiếng về hoa: "chính xác thì cô ấy giận bao nhiêu?")
+
+Bạn từ từ viết đi nhé.
+Mình có còn yêu nghề viết không?'>
+      Good headlines for March 8th ads. If today is the day you are starting an ad campaign for it, congratulations. You are now part of the idea behind a rather sweet day.
+
+      For as long as anyone remembers, women have spent their time caring for family and children, rarely setting time aside for themselves. Maybe close to March 8th, they do not even know what they should do that day.
+
+      But if today we start with a few questions, maybe they will realize: tomorrow is March 8th.
+
+      So how do you write a question that becomes a true rhetorical question. I would bet ChatGPT has never once produced a proper rhetorical question:
+      Will tomorrow's outing be fun?
+      Where does the real happiness of women on March 8th actually come from?
+      What color does she really like?
+      (I love a rhetorical question just like this one, from a famous flower ad: "exactly how angry is she?")
+
+      Take your time writing it. Do I still love this craft of writing?
+    </div>
+  </div>
+
+  <!-- POST 4 -->
+  <div class="post-block">
+    <div class="post-label" data-en="Post 04 · Relaunching the Group" data-vi="Bài 04 · Kích Hoạt Lại Nhóm">Post 04 · Relaunching the Group</div>
+    <div class="post-title" data-en="Why this group exists" data-vi="Tại vì sao nhóm này được ra đời">Why this group exists</div>
+    <div class="post-body" data-en='Today the admin is officially picking up the pen again (haha, well, typing on a phone) to reactivate a sweet little group called "Viết Ads," which I, the admin, left wide open for almost three years.
+
+So the question is what should I even write.
+Let me write about why this group "Viết Ads" came to exist.
+
+Because I am someone obsessed with reading about advertising, analyzing ad content, in love with advertising language (alongside the occasional sweet little story about life), and I just wanted a place where like minded women could gather, share this same passion, talk about the craft of writing, and feel something from a piece of writing that moves us. To keep something very "word" alive, instead of just watching short videos all the time.
+
+Then I asked myself: how do words actually affect emotion. I will say, from my own experience, when I can still read, still feel something from words, it means my soul still has a corner of "calm feeling" that is not driven from the outside, but generates itself from within. Maybe that sounds a little hard to follow, but imagine this: you watch a film, see an actor cry, you cry too, your emotion gets triggered by the character, by your own empathy, and that is true for most people. But reading words is different. Today you read something and feel one way, tomorrow or a few years later you might feel something else entirely.
+
+Like me. After three years away from this group, I went back and read everything I had written. My first reaction was shock: "wait, did I really write this well back then." Then reading more closely: "ugh, that sentence break is off, that is wrong, let me edit this." That, that right there, is my own writing talking back to me.
+
+So in short, this Viết Ads group is a space to write, for anyone who wants to write, and a space to read, for anyone who wants to read.
+
+Writing ads is a craft, and a craft needs practice. So just write, just create. The words will keep you with yourself a little longer.' data-vi='Hôm nay admin chính thức lại cầm bút (haha) à không, là đánh chữ bằng điện thoại để kích hoạt lại một nhóm "Viết Ads" dễ thương, mà admin là mình đây bỏ ngõ từ gần ba năm.
+
+Với câu hỏi là mình nên viết gì đây.
+Viết tại vì sao mà nhóm "Viết Ads" này được ra đời nhé.
+
+Tại vì mình, một đứa mê đọc sách về quảng cáo, phân tích nội dung quảng cáo, say mê ngôn từ quảng cáo (ngoài những truyện ngắn dễ thương nào đó về cuộc đời), chỉ muốn có một nơi để cùng các chị em cùng hội, cùng sự mê này trò chuyện, trao đổi về nghề viết, và rung cảm nào đó về một bài viết hay. Để giữ lại một chất gì rất "chữ" thay vì cứ coi phim ngắn nhiều.
+
+Rồi hỏi: cái chữ nó tác động thế nào tới cảm xúc. Mình nói (theo kinh nghiệm của mình), khi mình còn đọc, còn có cảm xúc với chữ có nghĩa là tâm hồn mình còn góc "yên ả của xúc cảm" không bị tác động từ bên ngoài, mà nó tự sinh ra từ bên trong. Có thể mình nói hơi khó hiểu một chút, nhưng mà bạn cứ tưởng tượng đi, bạn xem phim, thấy diễn viên khóc, bạn khóc, thì có thể cảm xúc bị tác động bởi nhân vật, lên sự đồng cảm của bạn và cảm xúc được tạo ra, và hầu hết mọi người đều vậy. Nhưng khi đọc cái chữ, nó khác, hôm nay bạn đọc một bài viết nào đó, bạn có cảm xúc sẽ khác với ngày hôm qua hoặc một vài năm sau đó.
+
+Giống như mình, sau 3 năm mình vào nhóm này, mình đọc lại tất cả các bài mình viết, cảm xúc ban đầu của mình "kinh ngạc: ủa ngày xưa mình viết hay thế à", rồi khi đọc chi tiết từng bài thì lại có cảm xúc "ui, cấu trúc ngắt câu sao sao, sai rồi, edit lại thôi". Đấy đấy, đó lại cái chữ của mình.
+
+Vậy đó, tóm lại là nhóm Viết Ads này là không gian viết, cho tất cả những ai muốn viết, không gian đọc cho tất cả những ai muốn đọc.
+
+Viết Ads là một nghề, mà nghề thì cần phải được luyện. Nên bạn cứ viết, cứ sáng tạo. Rồi chữ nó cũng giữ mình ở lại lâu hơn với chính mình.'>
+      Today the admin is officially picking up the pen again (haha, well, typing on a phone) to reactivate a sweet little group called "Viết Ads," which I, the admin, left wide open for almost three years.
+
+      Because I am someone obsessed with reading about advertising, analyzing ad content, in love with advertising language. I just wanted a place where like minded people could gather, talk about the craft of writing, and feel something from a piece of writing that moves us.
+
+      Then I asked myself: how do words actually affect emotion. When I can still read, still feel something from words, it means my soul still has a corner of calm feeling that is not driven from the outside, but generates itself from within.
+
+      Like me. After three years away from this group, I went back and read everything I had written. My first reaction was shock: "wait, did I really write this well back then." Then: "ugh, that sentence break is off, let me edit this."
+
+      So in short, this Viết Ads group is a space to write, for anyone who wants to write, and a space to read, for anyone who wants to read.
+
+      Writing ads is a craft, and a craft needs practice. So just write, just create. The words will keep you with yourself a little longer.
+      <span class="signoff">SG15June2026. The day Lynn started writing again.</span>
+    </div>
+  </div>
+
+  <!-- POST 5 -->
+  <div class="post-block">
+    <div class="post-label" data-en="Post 05 · #moingaymottipcontent" data-vi="Bài 05 · #moingaymottipcontent">Post 05 · #moingaymottipcontent</div>
+    <div class="post-title" data-en="Kindness in the way we write ads" data-vi="Sự tử tế trong cách viết quảng cáo">Kindness in the way we write ads</div>
+    <div class="post-body" data-en='When someone cares about branding, then from the moment they start shaping a concept for a new product or a new promotion, they need to think about "kindness."
+
+Kindness in writing depends on who the writer&apos;s heart is really directed toward: the audience (the customer), the brand (the business), the words themselves, or the writer.
+
+Kindness shows up in word choice. Do not exaggerate the truth, do not dress up the language. Write in the simplest, closest way possible, so it can reach someone&apos;s heart and stay there as long as possible.
+
+Here is an example about an "antique style clock." See which version feels more "kind":
+
+1. Time is more precious than gold or jewels. Because time once passed can never return, unless you have a time machine. So the "Timeless Clock" was crafted from the rarest wood, by the most skilled artisans, to preserve time and connect past, present, and future for generations to remember.
+
+2. Look at this clock on your wall, somewhere in your own private corner of space. A few memories will come rushing back, beautiful ones. "Timeless Clock" keeps time.
+
+Now try another product: a newly launched perfume.
+
+1. Every drop of this perfume is the crystallization of hundreds of rare fragrance ingredients, carefully selected from around the world, delivering an unprecedented olfactory experience that confirms the status of its owner.
+
+2. One day you decide to spray a scent onto your shirt. That evening, you meet the person you needed to meet. They say, "Being near you makes me want to close my eyes and sleep peacefully." Guess who that person is, and what happens next.
+
+Both pairs of examples show the same thing: version one tries to convince through grandeur, while version two simply tells one small, true moment.
+
+There is a scientific reason for this. Smell is the only sense with a direct pathway to the amygdala and hippocampus, the brain&apos;s centers for emotion and memory, without first passing through the thalamus like the other senses do. That is why a scent can awaken a feeling or a memory almost instantly, before you even realize where it came from.
+
+So when writing about perfume, do not describe the scent. Describe the moment the reader&apos;s brain automatically remembers someone. That is real kindness toward the reader, because it does not force anyone to believe anything. It simply awakens a feeling that was already there inside them.' data-vi='Khi ai đó chú tâm về branding, thì lúc bắt đầu lên một concept về sản phẩm mới, chương trình khuyến mãi mới, đều phải quan tâm tới "sự tử tế."
+
+Sự tử tế trong lúc viết cũng tuỳ vào tâm của người viết dành cho ai: khán giả (khách hàng), thương hiệu (doanh nghiệp), chính câu chữ mình viết ra, hay là chính mình.
+
+Kindness (sự tử tế) thể hiện ở cách dùng từ. Không nói quá sự thật, không "khoa trương" ngôn từ, mà hãy viết một cách đơn giản, gần gũi nhất để đi vào lòng người và ở đó lâu nhất có thể.
+
+Hãy xem ví dụ về một "chiếc đồng hồ giả cổ." Rồi xem đoạn content nào "kind" hơn nhé:
+
+1. Thời gian là quý giá hơn cả vàng bạc châu báu. Bởi thời gian đã qua thì có bao giờ quay về được, trừ khi có cỗ máy thời gian. Nên "Timeless Clock" được thiết kế với mọi sự quý giá nhất về chất liệu gỗ hiếm, bởi các thợ thủ công lành nghề nhất, để lưu giữ thời gian, kết nối quá khứ, hiện tại và tương lai cho con cháu nhớ về.
+
+2. Nhìn chiếc đồng hồ này trên tường, ở một góc nào đó trong không gian riêng của bạn. Một vài kỷ niệm sẽ ùa về, rất đẹp. "Timeless Clock" lưu giữ thời gian.
+
+Giờ thử thêm một sản phẩm khác: một lọ nước hoa mới ra mắt.
+
+1. Mỗi giọt nước hoa là kết tinh của hàng trăm loại hương liệu quý hiếm được tuyển chọn kỹ lưỡng từ khắp nơi trên thế giới, mang đến trải nghiệm khứu giác đỉnh cao chưa từng có, khẳng định đẳng cấp của người sở hữu.
+
+2. Có một ngày bạn quyết định xịt một mùi hương nước hoa lên áo. Đến tối, bạn gặp người bạn cần gặp. Người ấy nói "bên bạn, cảm giác muốn nhắm mắt ngủ bình yên." Bạn đoán đi, người ấy là ai, và chuyện gì sẽ xảy ra sau đó?
+
+Cả hai cặp ví dụ đều cho thấy cùng một điều: bản số 1 cố gắng thuyết phục bằng sự hoành tráng, còn bản số 2 chỉ kể một khoảnh khắc rất nhỏ, rất thật.
+
+Có một lý do khoa học cho việc này. Khứu giác là giác quan duy nhất có đường dẫn thẳng tới amygdala và hippocampus, nơi xử lý cảm xúc và ký ức của não bộ, mà không cần đi qua thalamus như các giác quan khác. Đó là lý do một mùi hương có thể đánh thức một cảm xúc hay một ký ức gần như ngay lập tức, trước khi bạn kịp nhận ra nó đến từ đâu.
+
+Nên khi viết về nước hoa, đừng tả mùi hương. Hãy tả cái khoảnh khắc não bộ người đọc tự động nhớ về ai đó. Đó mới là sự tử tế thật sự với người đọc, vì nó không ép ai phải tin điều gì cả, nó chỉ đơn giản là đánh thức một cảm giác đã có sẵn trong họ.'>
+      When someone cares about branding, then from the moment they start shaping a concept for a new product or a new promotion, they need to think about "kindness."
+
+      Kindness in writing depends on who the writer's heart is really directed toward: the audience, the brand, the words themselves, or the writer.
+
+      Kindness shows up in word choice. Do not exaggerate the truth, do not dress up the language. Write in the simplest, closest way possible.
+
+      Here is an example about an "antique style clock." See which version feels more "kind":
+
+      1. Time is more precious than gold or jewels. So the "Timeless Clock" was crafted from the rarest wood, by the most skilled artisans, to preserve time and connect past, present, and future.
+
+      2. Look at this clock on your wall, somewhere in your own private corner. A few beautiful memories will come rushing back. "Timeless Clock" keeps time.
+
+      Now try another product: a newly launched perfume.
+
+      1. Every drop is the crystallization of hundreds of rare fragrance ingredients, delivering an unprecedented olfactory experience that confirms the status of its owner.
+
+      2. One day you spray a scent onto your shirt. That evening, you meet someone. They say, "Being near you makes me want to close my eyes and sleep peacefully." Guess who that person is, and what happens next.
+
+      Version one tries to convince through grandeur. Version two simply tells one small, true moment.
+
+      There is a scientific reason for this. Smell is the only sense with a direct pathway to the amygdala and hippocampus, the brain's centers for emotion and memory, bypassing the thalamus like other senses do not. That is why a scent can awaken a feeling almost instantly, before you even realize where it came from.
+
+      So when writing about perfume, do not describe the scent. Describe the moment the reader's brain automatically remembers someone. That is real kindness toward the reader: it does not force belief, it simply awakens a feeling already inside them.
+    </div>
+  </div>
+
+  <!-- POST 6 -->
+  <div class="post-block">
+    <div class="post-label" data-en="Post 06 · Teacher's Day Card" data-vi="Bài 06 · Thiệp Ngày Nhà Giáo">Post 06 · Teacher's Day Card</div>
+    <div class="post-title" data-en="When gratitude finds its voice" data-vi="Khi lòng biết ơn biết nói">When gratitude finds its voice</div>
+    <div class="post-image">
+      <img src="images/truc-chi-teachers-day.jpeg" alt="Trúc Chỉ handmade paper art card for Teacher's Day" />
+    </div>
+    <div class="post-body" data-en='Everyone in life owes gratitude to someone, at least once, a few times, or many times over. Today let us talk about "the debt we owe our teachers."
+
+A teacher is the one who gives us knowledge. But that word is so much bigger than it sounds. It carries inspiration, skill, and the simple act of living in a way that makes us admire them, that turns us toward goodness, that makes us better. Better in thought, in action, and in words. And eventually we grow into people we ourselves are proud of. We feel a quiet sense of having arrived somewhere, in life and in spirit.
+
+Every mark on this card is made by hand, strand by strand of trúc chỉ paper woven together, the same quiet way a teacher weaves themselves into our life, one small thread at a time. A card that feels just right for this moment, when the gratitude in your heart wants to speak to your teacher.' data-vi='Ai trong đời cũng có ít nhất một lần, vài lần, hoặc rất nhiều lần mang ơn người khác. Hôm nay chúng ta nói về "ơn nghĩa của thầy."
+
+Thầy là người cho ta cái chữ. Cái chữ nó rất rộng, bao hàm cả việc truyền cảm hứng, truyền kỹ năng, và cả cách người ấy sống, khiến ta ngưỡng mộ mà hướng thiện, trở nên đẹp hơn. Đẹp hơn trong suy nghĩ, trong việc làm và trong lời nói. Rồi chúng ta lớn lên thành người mà chính mình cũng tự hào. Cảm thấy đủ với sự thành tựu nào đó ở Đạo và Đời.
+
+Mỗi nét trên tấm thiệp này được làm bằng tay, từng sợi giấy trúc chỉ đan vào nhau như cách một người thầy lặng lẽ đan vào đời ta từng chút một. Một tấm thiệp rất ưng cho bạn lúc này, khi lòng biết ơn trong tim muốn nói với Thầy.'>
+      Everyone in life owes gratitude to someone, at least once, a few times, or many times over. Today let us talk about "the debt we owe our teachers."
+
+      A teacher is the one who gives us knowledge. But that word is so much bigger than it sounds. It carries inspiration, skill, and the simple act of living in a way that makes us admire them, that turns us toward goodness, that makes us better.
+
+      Every mark on this card is made by hand, strand by strand of trúc chỉ paper woven together, the same quiet way a teacher weaves themselves into our life, one small thread at a time. A card that feels just right for this moment, when the gratitude in your heart wants to speak to your teacher.
+    </div>
+  </div>
+
+  <!-- BOTTOM CTA -->
+  <div class="cta-section">
+    <h2 data-en="Love the craft of writing too?" data-vi="Cũng mê nghề viết như mình?">Love the craft of writing too?</h2>
+    <p data-en="Come read, write, and trade ideas with other people who care about words as much as you do." data-vi="Vào đọc, viết, và trao đổi ý tưởng cùng những người yêu chữ nghĩa như bạn.">
+      Come read, write, and trade ideas with other people who care about words as much as you do.
+    </p>
+    <a href="https://www.facebook.com/share/g/17jusGm224/?mibextid=wwXIfr" target="_blank" class="btn" data-en="Join Viết Ads on Facebook →" data-vi="Vào Nhóm Viết Ads →">Join Viết Ads on Facebook →</a>
+  </div>
+
+  <footer>
+    <p data-en="© 2026 Lynn Truong. Vietnamese Copywriter & Content Strategist. Singapore." data-vi="© 2026 Lynn Truong. Chuyên Viết Content & Chiến Lược Nội Dung Tiếng Việt. Singapore.">© 2026 Lynn Truong. Vietnamese Copywriter & Content Strategist. Singapore.</p>
+    <p style="color: var(--muted); font-size: 0.75rem;"><a href="index.html" style="color:var(--accent); text-decoration:none;" data-en="← Back to Home" data-vi="← Về Trang Chủ">← Back to Home</a></p>
+  </footer>
+
+  <script>
+    let currentLang = 'en';
+    function setLang(lang) {
+      currentLang = lang;
+      document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+      document.getElementById('btnVI').classList.toggle('active', lang === 'vi');
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (text !== null && text !== '') el.innerHTML = text;
+      });
+    }
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
+    });
+  </script>
+
+</body>
+</html>
